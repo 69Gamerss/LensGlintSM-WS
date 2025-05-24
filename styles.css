@@ -6,13 +6,27 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    background: 
+        /* Animated gradient background */
+        linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2d2d2d 50%, #1a1a1a 75%, #0a0a0a 100%),
+        /* Subtle moving pattern */
+        radial-gradient(circle at 20% 80%, rgba(212,175,55,0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(212,175,55,0.03) 0%, transparent 50%),
+        /* Noise texture */
+        repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.005) 2px, rgba(255,255,255,0.005) 4px);
+    background-size: 400% 400%, 100% 100%, 100% 100%, 20px 20px;
+    animation: gradientShift 20s ease infinite;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2vw;
     overflow: hidden;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%, 0% 0%, 0% 0%, 0% 0%; }
+    50% { background-position: 100% 50%, 0% 0%, 0% 0%, 0% 0%; }
 }
 
 .container {
@@ -26,51 +40,71 @@ body {
 
 .ticket {
     position: relative;
-    width: min(75vw, 900px);
-    height: min(37.5vw, 450px);
-    max-width: 900px;
-    max-height: 450px;
+    width: min(90vw, 1200px);
+    height: min(45vw, 600px);
+    max-width: 1200px;
+    max-height: 600px;
     min-width: 320px;
     min-height: 160px;
     background: 
         /* Premium ticket texture with subtle patterns */
-        linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%, rgba(255,255,255,0.06) 100%),
+        linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%, rgba(255,255,255,0.08) 100%),
         linear-gradient(45deg, #1a1a1a 0%, #2a2a2a 25%, #1a1a1a 50%, #2a2a2a 75%, #1a1a1a 100%),
-        /* Realistic paper/card texture */
-        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.03) 0%, transparent 60%),
-        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.03) 0%, transparent 60%),
+        /* Enhanced paper/card texture */
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.05) 0%, transparent 60%),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 60%),
         /* Subtle fabric-like texture */
-        repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(255,255,255,0.01) 1px, rgba(255,255,255,0.01) 2px);
+        repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(255,255,255,0.02) 1px, rgba(255,255,255,0.02) 2px);
     background-size: 100% 100%, 1.5px 1.5px, 40px 40px, 60px 60px, 3px 3px;
-    border-radius: clamp(8px, 1vw, 16px);
+    border-radius: clamp(12px, 1.2vw, 20px);
     box-shadow: 
-        0 clamp(20px, 2.5vw, 40px) clamp(40px, 5vw, 80px) rgba(0,0,0,0.8),
-        inset 0 clamp(1px, 0.15vw, 3px) 0 rgba(255,255,255,0.2),
-        inset 0 clamp(-1px, -0.15vw, -3px) 0 rgba(0,0,0,0.7),
+        /* Main shadow with multiple layers for depth */
+        0 clamp(30px, 3.5vw, 60px) clamp(60px, 7vw, 120px) rgba(0,0,0,0.9),
+        0 clamp(15px, 1.8vw, 30px) clamp(30px, 3.5vw, 60px) rgba(0,0,0,0.6),
+        0 clamp(8px, 1vw, 16px) clamp(16px, 2vw, 32px) rgba(0,0,0,0.4),
+        /* Inner highlights and shadows */
+        inset 0 clamp(2px, 0.2vw, 4px) 0 rgba(255,255,255,0.25),
+        inset 0 clamp(-2px, -0.2vw, -4px) 0 rgba(0,0,0,0.8),
         /* Realistic embossed border */
-        inset clamp(2px, 0.3vw, 6px) clamp(2px, 0.3vw, 6px) clamp(4px, 0.6vw, 12px) rgba(0,0,0,0.4),
-        /* Outer glow for premium feel */
-        0 0 clamp(16px, 2vw, 32px) rgba(212,175,55,0.1);
+        inset clamp(3px, 0.4vw, 8px) clamp(3px, 0.4vw, 8px) clamp(6px, 0.8vw, 16px) rgba(0,0,0,0.5),
+        /* Enhanced outer glow */
+        0 0 clamp(24px, 3vw, 48px) rgba(212,175,55,0.15),
+        0 0 clamp(48px, 6vw, 96px) rgba(212,175,55,0.08);
     overflow: hidden;
-    transition: all 0.2s ease-out;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     transform-style: preserve-3d;
-    /* Premium ticket border */
-    border: clamp(1px, 0.15vw, 3px) solid rgba(255,255,255,0.15);
+    /* Enhanced premium border */
+    border: clamp(2px, 0.2vw, 4px) solid rgba(255,255,255,0.2);
     /* Prevent text selection */
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    /* Subtle floating animation */
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotateX(0deg); }
+    50% { transform: translateY(-8px) rotateX(1deg); }
 }
 
 .ticket:hover {
     box-shadow: 
-        0 clamp(56px, 7vw, 112px) clamp(112px, 14vw, 224px) rgba(0,0,0,0.9),
-        inset 0 clamp(2px, 0.3vw, 6px) 0 rgba(255,255,255,0.3),
-        inset 0 clamp(-1px, -0.2vw, -4px) 0 rgba(0,0,0,0.7),
-        inset clamp(2px, 0.3vw, 6px) clamp(2px, 0.3vw, 6px) clamp(4px, 0.6vw, 12px) rgba(0,0,0,0.4),
-        0 0 clamp(24px, 3vw, 48px) rgba(212,175,55,0.2);
+        /* Enhanced hover shadows */
+        0 clamp(80px, 10vw, 160px) clamp(160px, 20vw, 320px) rgba(0,0,0,0.95),
+        0 clamp(40px, 5vw, 80px) clamp(80px, 10vw, 160px) rgba(0,0,0,0.7),
+        0 clamp(20px, 2.5vw, 40px) clamp(40px, 5vw, 80px) rgba(0,0,0,0.5),
+        /* Enhanced inner effects */
+        inset 0 clamp(3px, 0.3vw, 6px) 0 rgba(255,255,255,0.35),
+        inset 0 clamp(-3px, -0.3vw, -6px) 0 rgba(0,0,0,0.8),
+        inset clamp(3px, 0.4vw, 8px) clamp(3px, 0.4vw, 8px) clamp(6px, 0.8vw, 16px) rgba(0,0,0,0.5),
+        /* Dramatic outer glow */
+        0 0 clamp(40px, 5vw, 80px) rgba(212,175,55,0.25),
+        0 0 clamp(80px, 10vw, 160px) rgba(212,175,55,0.15),
+        0 0 clamp(120px, 15vw, 240px) rgba(212,175,55,0.08);
+    animation: none;
 }
 
 /* Realistic ticket notches */
