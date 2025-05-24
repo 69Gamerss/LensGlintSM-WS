@@ -14,8 +14,8 @@ body {
         radial-gradient(circle at 80% 20%, rgba(212,175,55,0.03) 0%, transparent 50%),
         /* Noise texture */
         repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.005) 2px, rgba(255,255,255,0.005) 4px);
-    background-size: 400% 400%, 100% 100%, 100% 100%, 20px 20px;
-    animation: gradientShift 20s ease infinite;
+    background-size: 200% 200%, 100% 100%, 100% 100%, 20px 20px;
+    animation: gradientShift 8s ease-in-out infinite;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -25,8 +25,8 @@ body {
 }
 
 @keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%, 0% 0%, 0% 0%, 0% 0%; }
-    50% { background-position: 100% 50%, 0% 0%, 0% 0%, 0% 0%; }
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 .container {
@@ -82,12 +82,13 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     /* Subtle floating animation */
-    animation: float 6s ease-in-out infinite;
+    animation: float 4s ease-in-out infinite;
+    will-change: transform;
 }
 
 @keyframes float {
     0%, 100% { transform: translateY(0px) rotateX(0deg); }
-    50% { transform: translateY(-8px) rotateX(1deg); }
+    50% { transform: translateY(-6px) rotateX(0.5deg); }
 }
 
 .ticket:hover {
@@ -483,16 +484,37 @@ body {
     opacity: 1;
 }
 
-/* Mobile and small screen optimizations */
+/* Performance optimizations for mobile */
 @media (max-width: 768px) {
     body {
         padding: 1vw;
+        /* Reduce background complexity on mobile */
+        background: 
+            linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2d2d2d 50%, #1a1a1a 75%, #0a0a0a 100%),
+            radial-gradient(circle at 20% 80%, rgba(212,175,55,0.02) 0%, transparent 50%);
+        background-size: 200% 200%, 100% 100%;
+        animation: gradientShift 10s ease-in-out infinite;
     }
     
     .ticket {
         width: 95vw;
         height: 47.5vw;
         max-height: 60vh;
+        /* Simplified shadows for better mobile performance */
+        box-shadow: 
+            0 clamp(20px, 2.5vw, 40px) clamp(40px, 5vw, 80px) rgba(0,0,0,0.8),
+            inset 0 clamp(1px, 0.15vw, 3px) 0 rgba(255,255,255,0.2),
+            0 0 clamp(16px, 2vw, 32px) rgba(212,175,55,0.1);
+        /* Faster animation for mobile */
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    .ticket:hover {
+        /* Simplified hover effects for mobile */
+        box-shadow: 
+            0 clamp(40px, 5vw, 80px) clamp(80px, 10vw, 160px) rgba(0,0,0,0.9),
+            inset 0 clamp(2px, 0.25vw, 4px) 0 rgba(255,255,255,0.3),
+            0 0 clamp(24px, 3vw, 48px) rgba(212,175,55,0.2);
     }
     
     .ticket-content {
@@ -508,14 +530,36 @@ body {
         font-size: 2.2vw;
         letter-spacing: 1.5vw;
     }
+    
+    /* Disable complex animations on mobile for better performance */
+    .ticket::after {
+        display: none;
+    }
 }
 
 /* Very small screens */
 @media (max-width: 480px) {
+    body {
+        /* Even simpler background for very small screens */
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+        animation: none;
+    }
+    
     .ticket {
         width: 98vw;
         height: 49vw;
         max-height: 70vh;
+        /* Minimal shadows for performance */
+        box-shadow: 
+            0 15px 30px rgba(0,0,0,0.7),
+            inset 0 1px 0 rgba(255,255,255,0.15);
+        animation: none; /* Disable floating animation on very small screens */
+    }
+    
+    .ticket:hover {
+        box-shadow: 
+            0 20px 40px rgba(0,0,0,0.8),
+            inset 0 2px 0 rgba(255,255,255,0.2);
     }
     
     .photography-text {
@@ -526,6 +570,26 @@ body {
     .session-text {
         font-size: 2.8vw;
         letter-spacing: 1.8vw;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .ticket {
+        /* Reduce complex effects on touch devices */
+        animation: float 5s ease-in-out infinite;
+    }
+    
+    .ticket:hover {
+        /* Simplify hover effects for touch */
+        box-shadow: 
+            0 clamp(30px, 4vw, 60px) clamp(60px, 8vw, 120px) rgba(0,0,0,0.85),
+            0 0 clamp(20px, 2.5vw, 40px) rgba(212,175,55,0.15);
+    }
+    
+    /* Disable shine animation on touch devices */
+    .ticket::after {
+        display: none;
     }
 }
 
