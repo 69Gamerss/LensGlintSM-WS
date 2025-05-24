@@ -49,20 +49,13 @@ body {
     background-size: 100% 100%, 1.5px 1.5px, 40px 40px, 60px 60px, 3px 3px;
     border-radius: clamp(12px, 1.2vw, 20px);
     box-shadow: 
-        /* Main shadow with multiple layers for depth */
+        /* Simplified shadow for smooth performance */
         0 clamp(30px, 3.5vw, 60px) clamp(60px, 7vw, 120px) rgba(0,0,0,0.9),
-        0 clamp(15px, 1.8vw, 30px) clamp(30px, 3.5vw, 60px) rgba(0,0,0,0.6),
-        0 clamp(8px, 1vw, 16px) clamp(16px, 2vw, 32px) rgba(0,0,0,0.4),
-        /* Inner highlights and shadows */
         inset 0 clamp(2px, 0.2vw, 4px) 0 rgba(255,255,255,0.25),
-        inset 0 clamp(-2px, -0.2vw, -4px) 0 rgba(0,0,0,0.8),
-        /* Realistic embossed border */
-        inset clamp(3px, 0.4vw, 8px) clamp(3px, 0.4vw, 8px) clamp(6px, 0.8vw, 16px) rgba(0,0,0,0.5),
-        /* Enhanced outer glow */
-        0 0 clamp(24px, 3vw, 48px) rgba(212,175,55,0.15),
-        0 0 clamp(48px, 6vw, 96px) rgba(212,175,55,0.08);
+        0 0 clamp(24px, 3vw, 48px) rgba(212,175,55,0.15);
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* SMOOTH transition - only transform for performance */
+    transition: transform 0.15s ease-out;
     cursor: pointer;
     transform-style: preserve-3d;
     /* Enhanced premium border */
@@ -76,19 +69,8 @@ body {
 }
 
 .ticket:hover {
-    box-shadow: 
-        /* Enhanced hover shadows */
-        0 clamp(80px, 10vw, 160px) clamp(160px, 20vw, 320px) rgba(0,0,0,0.95),
-        0 clamp(40px, 5vw, 80px) clamp(80px, 10vw, 160px) rgba(0,0,0,0.7),
-        0 clamp(20px, 2.5vw, 40px) clamp(40px, 5vw, 80px) rgba(0,0,0,0.5),
-        /* Enhanced inner effects */
-        inset 0 clamp(3px, 0.3vw, 6px) 0 rgba(255,255,255,0.35),
-        inset 0 clamp(-3px, -0.3vw, -6px) 0 rgba(0,0,0,0.8),
-        inset clamp(3px, 0.4vw, 8px) clamp(3px, 0.4vw, 8px) clamp(6px, 0.8vw, 16px) rgba(0,0,0,0.5),
-        /* Dramatic outer glow */
-        0 0 clamp(40px, 5vw, 80px) rgba(212,175,55,0.25),
-        0 0 clamp(80px, 10vw, 160px) rgba(212,175,55,0.15),
-        0 0 clamp(120px, 15vw, 240px) rgba(212,175,55,0.08);
+    /* Simple hover effect - just slight scale */
+    transform: scale(1.02);
 }
 
 /* Realistic ticket notches */
@@ -431,39 +413,10 @@ body {
     border-radius: clamp(8px, 1vw, 16px);
     mask: radial-gradient(circle 0px at 50% 50%, white 100%, transparent 100%);
     -webkit-mask: radial-gradient(circle 0px at 50% 50%, white 100%, transparent 100%);
-    transition: opacity 0.3s ease;
+    transition: opacity 0.2s ease;
 }
 
 .ticket:hover .holographic-overlay {
-    opacity: 1;
-}
-
-/* Enhanced white shine animation */
-.ticket::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, 
-        transparent 0%, 
-        transparent 46%, 
-        rgba(255,255,255,0.25) 48%, 
-        rgba(255,255,255,0.5) 50%, 
-        rgba(255,255,255,0.25) 52%, 
-        transparent 54%, 
-        transparent 100%);
-    transform: translateX(-100%) translateY(-100%) rotate(45deg);
-    transition: transform 2.2s ease-out;
-    pointer-events: none;
-    z-index: 25;
-    border-radius: clamp(8px, 1vw, 16px);
-    opacity: 0;
-}
-
-.ticket:hover::after {
-    transform: translateX(100%) translateY(100%) rotate(45deg);
     opacity: 1;
 }
 
@@ -491,10 +444,7 @@ body {
     
     .ticket:hover {
         /* Simplified hover effects for mobile */
-        box-shadow: 
-            0 clamp(40px, 5vw, 80px) clamp(80px, 10vw, 160px) rgba(0,0,0,0.9),
-            inset 0 clamp(2px, 0.25vw, 4px) 0 rgba(255,255,255,0.3),
-            0 0 clamp(24px, 3vw, 48px) rgba(212,175,55,0.2);
+        transform: scale(1.01);
     }
     
     .ticket-content {
@@ -509,11 +459,6 @@ body {
     .session-text {
         font-size: 2.2vw;
         letter-spacing: 1.5vw;
-    }
-    
-    /* Disable complex animations on mobile for better performance */
-    .ticket::after {
-        display: none;
     }
 }
 
@@ -536,9 +481,8 @@ body {
     }
     
     .ticket:hover {
-        box-shadow: 
-            0 20px 40px rgba(0,0,0,0.8),
-            inset 0 2px 0 rgba(255,255,255,0.2);
+        /* No hover effect on very small screens */
+        transform: none;
     }
     
     .photography-text {
@@ -559,15 +503,8 @@ body {
     }
     
     .ticket:hover {
-        /* Simplify hover effects for touch */
-        box-shadow: 
-            0 clamp(30px, 4vw, 60px) clamp(60px, 8vw, 120px) rgba(0,0,0,0.85),
-            0 0 clamp(20px, 2.5vw, 40px) rgba(212,175,55,0.15);
-    }
-    
-    /* Disable shine animation on touch devices */
-    .ticket::after {
-        display: none;
+        /* Minimal hover effects for touch */
+        transform: scale(1.01);
     }
 }
 
