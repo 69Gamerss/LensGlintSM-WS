@@ -12,7 +12,7 @@ A beautiful, interactive 2D ticket design with holographic effects and 3D animat
 
 ## Demo
 
-Visit the live demo: [Your GitHub Pages URL will go here]
+Visit the live demo: [https://69gamerss.github.io/LensGlintSM-WS/](https://69gamerss.github.io/LensGlintSM-WS/)
 
 ## Technologies Used
 
