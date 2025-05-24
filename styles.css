@@ -40,10 +40,10 @@ body {
 
 .ticket {
     position: relative;
-    width: min(90vw, 1200px);
-    height: min(45vw, 600px);
-    max-width: 1200px;
-    max-height: 600px;
+    width: min(75vw, 75vh * 2);
+    height: min(37.5vw, 75vh);
+    max-width: 1400px;
+    max-height: 700px;
     min-width: 320px;
     min-height: 160px;
     background: 
