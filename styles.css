@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
     margin: 0;
     padding: 0;
@@ -526,3 +527,533 @@ body {
         width: 6vw;
     }
 }
+=======
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2vw;
+    overflow: hidden;
+}
+
+.container {
+    perspective: 2000px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ticket {
+    position: relative;
+    width: 75vw;
+    height: 37.5vw;
+    max-width: 75vw;
+    max-height: 85vh;
+    background: 
+        /* Premium ticket texture with subtle patterns */
+        linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%, rgba(255,255,255,0.06) 100%),
+        linear-gradient(45deg, #1a1a1a 0%, #2a2a2a 25%, #1a1a1a 50%, #2a2a2a 75%, #1a1a1a 100%),
+        /* Realistic paper/card texture */
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.03) 0%, transparent 60%),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.03) 0%, transparent 60%),
+        /* Subtle fabric-like texture */
+        repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(255,255,255,0.01) 1px, rgba(255,255,255,0.01) 2px);
+    background-size: 100% 100%, 1.5px 1.5px, 40px 40px, 60px 60px, 3px 3px;
+    border-radius: 1vw;
+    box-shadow: 
+        0 2.5vw 5vw rgba(0,0,0,0.8),
+        inset 0 0.15vw 0 rgba(255,255,255,0.2),
+        inset 0 -0.15vw 0 rgba(0,0,0,0.7),
+        /* Realistic embossed border */
+        inset 0.3vw 0.3vw 0.6vw rgba(0,0,0,0.4),
+        /* Outer glow for premium feel */
+        0 0 2vw rgba(212,175,55,0.1);
+    overflow: hidden;
+    transition: all 0.2s ease-out;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    /* Premium ticket border */
+    border: 0.15vw solid rgba(255,255,255,0.15);
+    /* Prevent text selection */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.ticket:hover {
+    box-shadow: 
+        0 7vw 14vw rgba(0,0,0,0.9),
+        inset 0 0.3vw 0 rgba(255,255,255,0.3),
+        inset 0 -0.2vw 0 rgba(0,0,0,0.7),
+        inset 0.3vw 0.3vw 0.6vw rgba(0,0,0,0.4),
+        0 0 3vw rgba(212,175,55,0.2);
+}
+
+/* Realistic ticket notches */
+.notch {
+    position: absolute;
+    width: 3vw;
+    height: 3vw;
+    background: 
+        radial-gradient(circle, #1a1a1a 0%, #0f0f0f 70%, #000 100%);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 15;
+    border: 0.08vw solid rgba(255,255,255,0.15);
+    box-shadow: 
+        inset 0 0 0.5vw rgba(0,0,0,0.8),
+        0 0 0.8vw rgba(0,0,0,0.6);
+}
+
+.notch-left {
+    left: -1.5vw;
+    box-shadow: 
+        inset 0.3vw 0 0.6vw rgba(0,0,0,0.7),
+        0 0 0.8vw rgba(0,0,0,0.6);
+}
+
+.notch-right {
+    right: -1.5vw;
+    box-shadow: 
+        inset -0.3vw 0 0.6vw rgba(0,0,0,0.7),
+        0 0 0.8vw rgba(0,0,0,0.6);
+}
+
+/* Realistic ticket perforations */
+.ticket::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 0.08vw;
+    background: 
+        repeating-linear-gradient(90deg, 
+            transparent 0%, 
+            transparent 0.4vw, 
+            rgba(255,255,255,0.15) 0.4vw, 
+            rgba(255,255,255,0.15) 0.8vw);
+    z-index: 1;
+    transform: translateY(-50%);
+    opacity: 0.6;
+}
+
+.ticket-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 2vw 9vw 2vw 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 10;
+}
+
+/* Enhanced header section */
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.8vw;
+    z-index: 12;
+    position: relative;
+    padding-bottom: 0.8vw;
+    border-bottom: 0.05vw solid rgba(255,255,255,0.1);
+}
+
+.event-info {
+    text-align: left;
+}
+
+.event-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.4vw;
+    font-weight: 700;
+    color: rgba(255,255,255,0.95);
+    text-transform: uppercase;
+    letter-spacing: 0.15vw;
+    margin-bottom: 0.2vw;
+    text-shadow: 0 0.1vw 0.2vw rgba(0,0,0,0.5);
+}
+
+.event-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8vw;
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.08vw;
+    text-transform: uppercase;
+}
+
+/* Brand signature styling */
+.brand-signature {
+    text-align: center;
+    z-index: 12;
+    position: relative;
+}
+
+.signature-brand-img {
+    height: 3.5vw;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.85;
+    filter: drop-shadow(0 0.1vw 0.3vw rgba(0,0,0,0.3));
+}
+
+/* Main content area */
+.main-content {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6vw;
+    position: relative;
+    z-index: 11;
+    margin: 0 1vw;
+}
+
+.photography-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 4.5vw;
+    font-weight: 900;
+    color: #d4af37;
+    text-shadow: 
+        0 0.1vw 0 #b8941f,
+        0 0.2vw 0 #9d7e1a,
+        0 0.4vw 1vw rgba(0,0,0,0.9),
+        0 0 1.5vw rgba(212,175,55,0.4);
+    letter-spacing: 0.6vw;
+    position: relative;
+    z-index: 11;
+    text-transform: uppercase;
+}
+
+.session-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3vw;
+    font-weight: 300;
+    color: #d4af37;
+    text-shadow: 
+        0 0.1vw 0 #b8941f,
+        0 0.2vw 0.5vw rgba(0,0,0,0.7);
+    letter-spacing: 0.8vw;
+    margin-top: -0.3vw;
+    z-index: 11;
+    position: relative;
+    text-transform: uppercase;
+}
+
+/* Enhanced bottom section */
+.bottom-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 1.2vw;
+    height: 5.5vw;
+    position: relative;
+    z-index: 12;
+    padding-top: 0.8vw;
+    border-top: 0.05vw solid rgba(255,255,255,0.1);
+}
+
+/* QR Code styling */
+.qr-code {
+    z-index: 12;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4vw;
+}
+
+.qr-img {
+    width: 4.8vw;
+    height: 4.8vw;
+    object-fit: contain;
+    opacity: 0.9;
+    border: 0.08vw solid rgba(255,255,255,0.25);
+    border-radius: 0.3vw;
+    box-shadow: 0 0.2vw 0.4vw rgba(0,0,0,0.3);
+}
+
+.qr-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.55vw;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.08vw;
+}
+
+/* Logo styling */
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 12;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4vw;
+}
+
+.logo-img {
+    width: 5.2vw;
+    height: 5.2vw;
+    object-fit: contain;
+    opacity: 0.9;
+    filter: drop-shadow(0 0.2vw 0.4vw rgba(0,0,0,0.3));
+}
+
+.logo-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.55vw;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.08vw;
+}
+
+/* Stretched realistic barcode that fills the entire white rectangle */
+.serial-section {
+    position: absolute;
+    right: 1.5vw;
+    top: 50%;
+    transform: translateY(-50%) rotate(270deg);
+    transform-origin: center;
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5vw;
+}
+
+.barcode {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    height: 4.5vw;
+    width: 8vw;
+    margin-bottom: 0.4vw;
+    padding: 0.1vw; /* Reduced padding so bars fill more space */
+    background: #ffffff;
+    border-radius: 0.1vw;
+    border: 0.03vw solid rgba(0,0,0,0.2);
+    box-shadow: 0 0.1vw 0.3vw rgba(0,0,0,0.2);
+    justify-content: space-between; /* Distribute bars evenly */
+}
+
+.bar {
+    height: 100%;
+    border-radius: 0;
+    flex: 1; /* Make bars flexible to fill space */
+    min-width: 0.05vw; /* Minimum width for thin bars */
+}
+
+/* Stretched realistic barcode pattern - bars now fill the entire rectangle */
+.bar:nth-child(1) { background: #000; flex-grow: 1; }
+.bar:nth-child(2) { background: #fff; flex-grow: 1; }
+.bar:nth-child(3) { background: #000; flex-grow: 2; }
+.bar:nth-child(4) { background: #fff; flex-grow: 1; }
+.bar:nth-child(5) { background: #000; flex-grow: 1; }
+.bar:nth-child(6) { background: #fff; flex-grow: 2; }
+.bar:nth-child(7) { background: #000; flex-grow: 1; }
+.bar:nth-child(8) { background: #fff; flex-grow: 1; }
+.bar:nth-child(9) { background: #000; flex-grow: 3; }
+.bar:nth-child(10) { background: #fff; flex-grow: 1; }
+.bar:nth-child(11) { background: #000; flex-grow: 1; }
+.bar:nth-child(12) { background: #fff; flex-grow: 1; }
+.bar:nth-child(13) { background: #000; flex-grow: 2; }
+.bar:nth-child(14) { background: #fff; flex-grow: 2; }
+.bar:nth-child(15) { background: #000; flex-grow: 1; }
+.bar:nth-child(16) { background: #fff; flex-grow: 1; }
+.bar:nth-child(17) { background: #000; flex-grow: 1; }
+.bar:nth-child(18) { background: #fff; flex-grow: 3; }
+.bar:nth-child(19) { background: #000; flex-grow: 1; }
+.bar:nth-child(20) { background: #fff; flex-grow: 1; }
+.bar:nth-child(21) { background: #000; flex-grow: 2; }
+.bar:nth-child(22) { background: #fff; flex-grow: 1; }
+.bar:nth-child(23) { background: #000; flex-grow: 1; }
+.bar:nth-child(24) { background: #fff; flex-grow: 1; }
+.bar:nth-child(25) { background: #000; flex-grow: 2; }
+.bar:nth-child(26) { background: #fff; flex-grow: 1; }
+.bar:nth-child(27) { background: #000; flex-grow: 1; }
+.bar:nth-child(28) { background: #fff; flex-grow: 2; }
+.bar:nth-child(29) { background: #000; flex-grow: 3; }
+.bar:nth-child(30) { background: #fff; flex-grow: 1; }
+.bar:nth-child(31) { background: #000; flex-grow: 1; }
+.bar:nth-child(32) { background: #fff; flex-grow: 1; }
+.bar:nth-child(33) { background: #000; flex-grow: 2; }
+.bar:nth-child(34) { background: #fff; flex-grow: 1; }
+.bar:nth-child(35) { background: #000; flex-grow: 1; }
+.bar:nth-child(36) { background: #fff; flex-grow: 1; }
+.bar:nth-child(37) { background: #000; flex-grow: 2; }
+.bar:nth-child(38) { background: #fff; flex-grow: 1; }
+.bar:nth-child(39) { background: #000; flex-grow: 1; }
+.bar:nth-child(40) { background: #fff; flex-grow: 3; }
+
+.serial-number {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65vw;
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.08vw;
+    text-transform: uppercase;
+    text-shadow: 0 0.05vw 0.1vw rgba(0,0,0,0.5);
+    white-space: nowrap;
+}
+
+/* Enhanced holographic background - much bigger coverage */
+.holographic-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(45deg, 
+            rgba(255, 0, 255, 0.28) 0%,
+            rgba(0, 255, 255, 0.25) 12.5%,
+            rgba(255, 255, 0, 0.23) 25%,
+            rgba(255, 0, 128, 0.21) 37.5%,
+            rgba(128, 255, 0, 0.23) 50%,
+            rgba(0, 128, 255, 0.25) 62.5%,
+            rgba(255, 128, 0, 0.21) 75%,
+            rgba(128, 0, 255, 0.23) 87.5%,
+            rgba(255, 0, 255, 0.28) 100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+    border-radius: 1vw;
+    mask: radial-gradient(circle 0px at 50% 50%, white 100%, transparent 100%);
+    -webkit-mask: radial-gradient(circle 0px at 50% 50%, white 100%, transparent 100%);
+    transition: opacity 0.3s ease;
+}
+
+.ticket:hover .holographic-overlay {
+    opacity: 1;
+}
+
+/* Enhanced white shine animation */
+.ticket::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, 
+        transparent 0%, 
+        transparent 46%, 
+        rgba(255,255,255,0.25) 48%, 
+        rgba(255,255,255,0.5) 50%, 
+        rgba(255,255,255,0.25) 52%, 
+        transparent 54%, 
+        transparent 100%);
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    transition: transform 2.2s ease-out;
+    pointer-events: none;
+    z-index: 25;
+    border-radius: 1vw;
+    opacity: 0;
+}
+
+.ticket:hover::after {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+    opacity: 1;
+}
+
+/* Responsive design */
+@media (max-height: 600px) {
+    .ticket {
+        width: 70vw;
+        height: 35vw;
+    }
+    
+    .signature-brand-img {
+        height: 2.5vw;
+    }
+    
+    .photography-text {
+        font-size: 3.5vw;
+    }
+    
+    .session-text {
+        font-size: 1vw;
+    }
+    
+    .bottom-section {
+        height: 4vw;
+    }
+    
+    .qr-img {
+        width: 3.5vw;
+        height: 3.5vw;
+    }
+    
+    .logo-img {
+        width: 4vw;
+        height: 4vw;
+    }
+    
+    .barcode {
+        height: 3vw;
+        width: 6vw;
+    }
+}
+
+@media (orientation: portrait) {
+    .ticket {
+        width: 75vw;
+        height: 37.5vw;
+        max-height: 50vh;
+    }
+    
+    .signature-brand-img {
+        height: 2.5vw;
+    }
+    
+    .photography-text {
+        font-size: 3.2vw;
+        letter-spacing: 0.5vw;
+    }
+    
+    .session-text {
+        font-size: 0.9vw;
+        letter-spacing: 0.6vw;
+    }
+    
+    .bottom-section {
+        height: 4vw;
+    }
+    
+    .qr-img {
+        width: 3.5vw;
+        height: 3.5vw;
+    }
+    
+    .logo-img {
+        width: 4vw;
+        height: 4vw;
+    }
+    
+    .barcode {
+        height: 3vw;
+        width: 6vw;
+    }
+}
+>>>>>>> e6c4249e9f3bd99959d9a12e2bde4e279b60b374
