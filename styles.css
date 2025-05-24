@@ -72,14 +72,7 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    /* Subtle floating animation */
-    animation: float 4s ease-in-out infinite;
-    will-change: transform;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px) rotateX(0deg); }
-    50% { transform: translateY(-6px) rotateX(0.5deg); }
+    /* NO ANIMATION - Static for smooth performance */
 }
 
 .ticket:hover {
@@ -96,7 +89,6 @@ body {
         0 0 clamp(40px, 5vw, 80px) rgba(212,175,55,0.25),
         0 0 clamp(80px, 10vw, 160px) rgba(212,175,55,0.15),
         0 0 clamp(120px, 15vw, 240px) rgba(212,175,55,0.08);
-    animation: none;
 }
 
 /* Realistic ticket notches */
@@ -494,8 +486,7 @@ body {
             0 clamp(20px, 2.5vw, 40px) clamp(40px, 5vw, 80px) rgba(0,0,0,0.8),
             inset 0 clamp(1px, 0.15vw, 3px) 0 rgba(255,255,255,0.2),
             0 0 clamp(16px, 2vw, 32px) rgba(212,175,55,0.1);
-        /* Faster animation for mobile */
-        animation: float 3s ease-in-out infinite;
+        /* NO ANIMATION for mobile */
     }
     
     .ticket:hover {
@@ -541,7 +532,7 @@ body {
         box-shadow: 
             0 15px 30px rgba(0,0,0,0.7),
             inset 0 1px 0 rgba(255,255,255,0.15);
-        animation: none; /* Disable floating animation on very small screens */
+        /* NO ANIMATION on very small screens */
     }
     
     .ticket:hover {
@@ -564,8 +555,7 @@ body {
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
     .ticket {
-        /* Reduce complex effects on touch devices */
-        animation: float 5s ease-in-out infinite;
+        /* NO ANIMATION on touch devices */
     }
     
     .ticket:hover {
