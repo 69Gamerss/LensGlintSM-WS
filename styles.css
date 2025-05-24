@@ -16,7 +16,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2vw;
+    padding: 1vw;
     overflow: hidden;
 }
 
@@ -31,10 +31,11 @@ body {
 
 .ticket {
     position: relative;
-    width: min(75vw, 75vh * 2);
-    height: min(37.5vw, 75vh);
-    max-width: 1400px;
-    max-height: 700px;
+    /* TRUE 75% screen coverage */
+    width: 75vw;
+    height: 37.5vw;
+    max-width: 1600px;
+    max-height: 800px;
     min-width: 320px;
     min-height: 160px;
     background: 
@@ -54,10 +55,11 @@ body {
         inset 0 clamp(2px, 0.2vw, 4px) 0 rgba(255,255,255,0.25),
         0 0 clamp(24px, 3vw, 48px) rgba(212,175,55,0.15);
     overflow: hidden;
-    /* SMOOTH transition - only transform for performance */
-    transition: transform 0.15s ease-out;
+    /* ULTRA SMOOTH transition - hardware accelerated */
+    transition: transform 0.1s ease-out;
     cursor: pointer;
     transform-style: preserve-3d;
+    will-change: transform;
     /* Enhanced premium border */
     border: clamp(2px, 0.2vw, 4px) solid rgba(255,255,255,0.2);
     /* Prevent text selection */
@@ -65,12 +67,11 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    /* NO ANIMATION - Static for smooth performance */
 }
 
 .ticket:hover {
-    /* Simple hover effect - just slight scale */
-    transform: scale(1.02);
+    /* Ultra smooth hover effect - minimal scale for performance */
+    transform: scale(1.015);
 }
 
 /* Realistic ticket notches */
@@ -413,7 +414,7 @@ body {
     border-radius: clamp(8px, 1vw, 16px);
     mask: radial-gradient(circle 0px at 50% 50%, white 100%, transparent 100%);
     -webkit-mask: radial-gradient(circle 0px at 50% 50%, white 100%, transparent 100%);
-    transition: opacity 0.2s ease;
+    transition: opacity 0.15s ease;
 }
 
 .ticket:hover .holographic-overlay {
@@ -423,7 +424,7 @@ body {
 /* Performance optimizations for mobile */
 @media (max-width: 768px) {
     body {
-        padding: 1vw;
+        padding: 0.5vw;
         /* Static background for mobile - no animation */
         background: 
             linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2d2d2d 50%, #1a1a1a 75%, #0a0a0a 100%),
@@ -433,18 +434,19 @@ body {
     .ticket {
         width: 95vw;
         height: 47.5vw;
-        max-height: 60vh;
+        max-height: 70vh;
         /* Simplified shadows for better mobile performance */
         box-shadow: 
             0 clamp(20px, 2.5vw, 40px) clamp(40px, 5vw, 80px) rgba(0,0,0,0.8),
             inset 0 clamp(1px, 0.15vw, 3px) 0 rgba(255,255,255,0.2),
             0 0 clamp(16px, 2vw, 32px) rgba(212,175,55,0.1);
-        /* NO ANIMATION for mobile */
+        /* Ultra smooth mobile transition */
+        transition: transform 0.08s ease-out;
     }
     
     .ticket:hover {
-        /* Simplified hover effects for mobile */
-        transform: scale(1.01);
+        /* Ultra minimal hover effects for mobile */
+        transform: scale(1.005);
     }
     
     .ticket-content {
@@ -467,17 +469,19 @@ body {
     body {
         /* Even simpler background for very small screens */
         background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+        padding: 0;
     }
     
     .ticket {
         width: 98vw;
         height: 49vw;
-        max-height: 70vh;
+        max-height: 75vh;
         /* Minimal shadows for performance */
         box-shadow: 
             0 15px 30px rgba(0,0,0,0.7),
             inset 0 1px 0 rgba(255,255,255,0.15);
         /* NO ANIMATION on very small screens */
+        transition: none;
     }
     
     .ticket:hover {
@@ -499,20 +503,23 @@ body {
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
     .ticket {
-        /* NO ANIMATION on touch devices */
+        /* Ultra smooth touch transition */
+        transition: transform 0.05s ease-out;
     }
     
     .ticket:hover {
-        /* Minimal hover effects for touch */
-        transform: scale(1.01);
+        /* Minimal touch effects */
+        transform: scale(1.003);
     }
 }
 
 /* Large screens optimization */
 @media (min-width: 1200px) {
     .ticket {
-        width: 900px;
-        height: 450px;
+        width: 75vw;
+        height: 37.5vw;
+        max-width: 1600px;
+        max-height: 800px;
     }
     
     .event-title {
