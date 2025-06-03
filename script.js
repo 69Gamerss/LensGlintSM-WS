@@ -36,11 +36,29 @@ document.addEventListener('DOMContentLoaded', function() {
         // Calculate mouse position relative to center for 3D tilt effect
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / centerY * -10;
-        const rotateY = (x - centerX) / centerX * 10;
-        
-        // Apply 3D transform
-        ticket.style.transform = `translateY(-0.5vw) translateZ(2vw) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        // Add springy bounce effect using requestAnimationFrame and velocity
+        if (!ticket._bounce) {
+            ticket._bounce = { rx: 0, ry: 0, vx: 0, vy: 0, targetRx: 0, targetRy: 0, anim: null };
+        }
+        const targetRx = (y - centerY) / centerY * -14;
+        const targetRy = (x - centerX) / centerX * 14;
+        ticket._bounce.targetRx = targetRx;
+        ticket._bounce.targetRy = targetRy;
+        if (!ticket._bounce.anim) {
+            function animateBounce() {
+                const b = ticket._bounce;
+                // Spring physics
+                b.vx += (b.targetRy - b.ry) * 0.18;
+                b.vy += (b.targetRx - b.rx) * 0.18;
+                b.vx *= 0.65;
+                b.vy *= 0.65;
+                b.ry += b.vx;
+                b.rx += b.vy;
+                ticket.style.transform = `translateY(-0.5vw) translateZ(2vw) rotateX(${b.rx}deg) rotateY(${b.ry}deg) scale(1.025)`;
+                b.anim = requestAnimationFrame(animateBounce);
+            }
+            ticket._bounce.anim = requestAnimationFrame(animateBounce);
+        }
     }
     
     // Function to handle mouse leave (desktop)
@@ -50,7 +68,32 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hide holographic effect and reset transform
         holographicOverlay.style.mask = 'radial-gradient(circle 0px at 50% 50%, white 100%, transparent 100%)';
         holographicOverlay.style.webkitMask = 'radial-gradient(circle 0px at 50% 50%, white 100%, transparent 100%)';
-        ticket.style.transform = 'translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg) scale(1)';
+        if (ticket._bounce && ticket._bounce.anim) {
+            cancelAnimationFrame(ticket._bounce.anim);
+            ticket._bounce.anim = null;
+        }
+        if (ticket._bounce) {
+            // Animate back to rest
+            let rx = ticket._bounce.rx, ry = ticket._bounce.ry, vx = ticket._bounce.vx, vy = ticket._bounce.vy;
+            function animateReturn() {
+                vx += (0 - ry) * 0.18;
+                vy += (0 - rx) * 0.18;
+                vx *= 0.65;
+                vy *= 0.65;
+                ry += vx;
+                rx += vy;
+                ticket.style.transform = `translateY(0) translateZ(0) rotateX(${rx}deg) rotateY(${ry}deg) scale(1)`;
+                if (Math.abs(rx) > 0.1 || Math.abs(ry) > 0.1 || Math.abs(vx) > 0.1 || Math.abs(vy) > 0.1) {
+                    requestAnimationFrame(animateReturn);
+                } else {
+                    ticket.style.transform = 'translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg) scale(1)';
+                    ticket._bounce = null;
+                }
+            }
+            animateReturn();
+        } else {
+            ticket.style.transform = 'translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg) scale(1)';
+        }
     }
     
     // Function to handle device orientation (mobile)
@@ -129,21 +172,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize appropriate interaction method
     if (isMobileDevice() && deviceMotionSupported) {
-        // Try to enable device motion on mobile
-        ticket.addEventListener('touchstart', async function() {
-            if (!isUsingDeviceMotion) {
-                const success = await enableDeviceMotion();
-                if (success) {
-                    console.log('Device motion enabled for gyroscope tilt effects');
-                } else {
-                    // Fallback to touch-based interaction
-                    console.log('Device motion not available, using touch fallback');
-                    initializeTouchFallback();
-                }
+        // Always enable device motion if available (no tap required)
+        (async function() {
+            const success = await enableDeviceMotion();
+            if (!success) {
+                // Fallback to touch-based interaction
+                console.log('Device motion not available, using touch fallback');
+                initializeTouchFallback();
             }
-        }, { once: true });
-        
-        // Also add mouse events as fallback
+        })();
+
+        // Also add mouse events as fallback (for hybrid devices)
         ticket.addEventListener('mousemove', handleMouseMove);
         ticket.addEventListener('mouseleave', handleMouseLeave);
     } else {
