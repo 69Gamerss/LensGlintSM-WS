@@ -423,18 +423,24 @@ body {
 
 /* Performance optimizations for mobile */
 @media (max-width: 768px) {
+    html, body {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+    }
     body {
-        padding: 0.5vw;
         /* Static background for mobile - no animation */
         background: 
             linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2d2d2d 50%, #1a1a1a 75%, #0a0a0a 100%),
             radial-gradient(circle at 20% 80%, rgba(212,175,55,0.02) 0%, transparent 50%);
-        /* Force landscape orientation for ticket on mobile */
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
         min-height: 100vh;
+        min-width: 100vw;
     }
 
     .container {
@@ -443,6 +449,9 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
+        /* Prevent container from resizing on orientation change */
+        min-width: 100vw;
+        min-height: 100vh;
     }
 
     .ticket {
@@ -450,8 +459,11 @@ body {
         height: 47.5vh;
         max-width: 95vw;
         max-height: 70vh;
-        /* Rotate ticket to horizontal (landscape) orientation */
-        transform: rotate(90deg) scale(1.005);
+        /* Always force landscape orientation */
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(90deg) scale(1.005) !important;
         /* Simplified shadows for better mobile performance */
         box-shadow: 
             0 clamp(20px, 2.5vw, 40px) clamp(40px, 5vw, 80px) rgba(0,0,0,0.8),
@@ -459,11 +471,12 @@ body {
             0 0 clamp(16px, 2vw, 32px) rgba(212,175,55,0.1);
         /* Ultra smooth mobile transition */
         transition: transform 0.08s ease-out;
+        z-index: 100;
     }
 
     .ticket:hover {
         /* Ultra minimal hover effects for mobile */
-        transform: rotate(90deg) scale(1.01);
+        transform: translate(-50%, -50%) rotate(90deg) scale(1.01) !important;
     }
 
     .ticket-content {
