@@ -429,12 +429,29 @@ body {
         background: 
             linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2d2d2d 50%, #1a1a1a 75%, #0a0a0a 100%),
             radial-gradient(circle at 20% 80%, rgba(212,175,55,0.02) 0%, transparent 50%);
+        /* Force landscape orientation for ticket on mobile */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
     }
-    
+
+    .container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .ticket {
-        width: 95vw;
-        height: 47.5vw;
+        width: 95vh;
+        height: 47.5vh;
+        max-width: 95vw;
         max-height: 70vh;
+        /* Rotate ticket to horizontal (landscape) orientation */
+        transform: rotate(90deg) scale(1.005);
         /* Simplified shadows for better mobile performance */
         box-shadow: 
             0 clamp(20px, 2.5vw, 40px) clamp(40px, 5vw, 80px) rgba(0,0,0,0.8),
@@ -443,21 +460,21 @@ body {
         /* Ultra smooth mobile transition */
         transition: transform 0.08s ease-out;
     }
-    
+
     .ticket:hover {
         /* Ultra minimal hover effects for mobile */
-        transform: scale(1.005);
+        transform: rotate(90deg) scale(1.01);
     }
-    
+
     .ticket-content {
         padding: 4vw 12vw 4vw 4vw;
     }
-    
+
     .photography-text {
         font-size: 8vw;
         letter-spacing: 1vw;
     }
-    
+
     .session-text {
         font-size: 2.2vw;
         letter-spacing: 1.5vw;
