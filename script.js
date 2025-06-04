@@ -1,24 +1,36 @@
 // Dynamically size the ticket for all devices and orientations
 function resizeTicket() {
-  const aspect = 3.5; // width:height
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   let ticketWidth, ticketHeight;
 
-  // Try to fill 100% of the limiting dimension minus a small margin
-  const margin = 8; // px, to prevent clipping/shadow cutoff
-  if (vh * aspect <= vw) {
-    // Height is limiting
-    ticketHeight = vh - margin;
-    ticketWidth = ticketHeight * aspect;
-  } else {
-    // Width is limiting
-    ticketWidth = vw - margin;
-    ticketHeight = ticketWidth / aspect;
-  }
-
   const ticket = document.querySelector('.ticket');
   if (ticket) {
+    // Simple mobile detection: width <= 768px
+    const isMobile = vw <= 768;
+    let aspect;
+    if (isMobile) {
+      aspect = 1.7; // Mobile: much taller ticket for more vertical fill
+      // Mobile: edge-to-edge with small margin
+      const margin = 8; // px
+      if (vh * aspect <= vw) {
+        ticketHeight = vh - margin;
+        ticketWidth = ticketHeight * aspect;
+      } else {
+        ticketWidth = vw - margin;
+        ticketHeight = ticketWidth / aspect;
+      }
+    } else {
+      aspect = 2.2; // Desktop: taller ticket
+      // Desktop: use limiting dimension, never cut off, scale to 90%
+      if (vh * aspect <= vw) {
+        ticketHeight = vh * 0.9;
+        ticketWidth = ticketHeight * aspect;
+      } else {
+        ticketWidth = vw * 0.9;
+        ticketHeight = ticketWidth / aspect;
+      }
+    }
     ticket.style.width = ticketWidth + 'px';
     ticket.style.height = ticketHeight + 'px';
   }
@@ -45,23 +57,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to handle mouse movement (desktop)
     function handleMouseMove(e) {
         if (isUsingDeviceMotion) return; // Don't interfere with device motion
-        
+
         const rect = ticket.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+
+        // Detect if ticket is in vertical mode (rotated 90deg)
+        const isVertical = window.getComputedStyle(ticket).transform.includes('matrix') && rect.height > rect.width;
+
+        // Swap axes if in vertical mode
+        if (isVertical) {
+            [x, y] = [y, rect.width - x];
+        }
+
         // Calculate percentage position
         const xPercent = (x / rect.width) * 100;
         const yPercent = (y / rect.height) * 100;
-        
+
         // Create much bigger ellipse with more coverage
         const radiusX = Math.min(rect.width, rect.height) * 0.6;
         const radiusY = Math.min(rect.width, rect.height) * 0.45;
-        
+
         // Update mask to reveal holographic effect where mouse is
         holographicOverlay.style.mask = `radial-gradient(ellipse ${radiusX}px ${radiusY}px at ${xPercent}% ${yPercent}%, white 0%, rgba(255,255,255,0.7) 15%, rgba(255,255,255,0.4) 30%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 70%, transparent 100%)`;
         holographicOverlay.style.webkitMask = `radial-gradient(ellipse ${radiusX}px ${radiusY}px at ${xPercent}% ${yPercent}%, white 0%, rgba(255,255,255,0.7) 15%, rgba(255,255,255,0.4) 30%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 70%, transparent 100%)`;
-        
+
         // Calculate mouse position relative to center for 3D tilt effect
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
@@ -69,8 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!ticket._bounce) {
             ticket._bounce = { rx: 0, ry: 0, vx: 0, vy: 0, targetRx: 0, targetRy: 0, anim: null };
         }
-        const targetRx = (y - centerY) / centerY * -14;
-        const targetRy = (x - centerX) / centerX * 14;
+        let targetRx, targetRy;
+        if (isVertical) {
+            // Swap axes for tilt in vertical mode
+            targetRx = (x - centerX) / centerX * -14;
+            targetRy = (y - centerY) / centerY * 14;
+        } else {
+            targetRx = (y - centerY) / centerY * -14;
+            targetRy = (x - centerX) / centerX * 14;
+        }
         ticket._bounce.targetRx = targetRx;
         ticket._bounce.targetRy = targetRy;
         if (!ticket._bounce.anim) {

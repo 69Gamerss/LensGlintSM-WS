@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+html, body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
 body {
     font-family: 'Inter', sans-serif;
     background: 
@@ -13,10 +20,11 @@ body {
         radial-gradient(circle at 20% 80%, rgba(212,175,55,0.02) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(212,175,55,0.02) 0%, transparent 50%);
     min-height: 100vh;
+    min-width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1vw;
+    padding: 0;
     overflow: hidden;
 }
 
@@ -446,29 +454,27 @@ body {
     .container {
         width: 100vw;
         height: 100vh;
+        min-width: 100vw;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        /* Prevent container from resizing on orientation change */
-        min-width: 100vw;
-        min-height: 100vh;
+        overflow: hidden;
     }
 
     .ticket {
-        /* width, height, and aspect-ratio are set by JS for robust scaling */
-        max-height: 92vh;
-        min-width: 220px;
-        min-height: 60px;
+        /* width and height are set by JS for robust scaling */
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%) rotate(90deg) scale(1.005) !important;
-        /* Simplified shadows for better mobile performance */
+        transform-origin: center center;
         box-shadow: 
             0 clamp(20px, 2.5vw, 40px) clamp(40px, 5vw, 80px) rgba(0,0,0,0.8),
             inset 0 clamp(1px, 0.15vw, 3px) 0 rgba(255,255,255,0.2),
             0 0 clamp(16px, 2vw, 32px) rgba(212,175,55,0.1);
-        /* Ultra smooth mobile transition */
         transition: transform 0.08s ease-out;
         z-index: 100;
     }
@@ -536,8 +542,9 @@ body {
     }
 
     .bottom-section {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
         gap: 1vw;
         margin-top: 2vw;
         height: auto;
