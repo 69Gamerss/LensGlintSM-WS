@@ -455,10 +455,8 @@ body {
     }
 
     .ticket {
-        width: 92vh;
-        height: calc(92vh / 3.5); /* 3.5:1 aspect ratio, fills 92% of screen after rotation */
-        max-width: 99vw;
-        max-height: 99vh;
+        /* width, height, and aspect-ratio are set by JS for robust scaling */
+        max-height: 92vh;
         min-width: 220px;
         min-height: 60px;
         position: absolute;

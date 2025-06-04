@@ -1,6 +1,35 @@
+// Dynamically size the ticket for all devices and orientations
+function resizeTicket() {
+  const aspect = 3.5; // width:height
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  let ticketWidth, ticketHeight;
+
+  // Try to fill 100% of the limiting dimension minus a small margin
+  const margin = 8; // px, to prevent clipping/shadow cutoff
+  if (vh * aspect <= vw) {
+    // Height is limiting
+    ticketHeight = vh - margin;
+    ticketWidth = ticketHeight * aspect;
+  } else {
+    // Width is limiting
+    ticketWidth = vw - margin;
+    ticketHeight = ticketWidth / aspect;
+  }
+
+  const ticket = document.querySelector('.ticket');
+  if (ticket) {
+    ticket.style.width = ticketWidth + 'px';
+    ticket.style.height = ticketHeight + 'px';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    const ticket = document.querySelector('.ticket');
-    const holographicOverlay = document.querySelector('.holographic-overlay');
+  resizeTicket();
+  window.addEventListener('resize', resizeTicket);
+
+  const ticket = document.querySelector('.ticket');
+  const holographicOverlay = document.querySelector('.holographic-overlay');
     
     // Variables for device motion
     let isUsingDeviceMotion = false;
